@@ -64,6 +64,7 @@ public class Student {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", age=" + age +
+                ", subjectList=" + subjectList +
                 '}';
     }
 }
