@@ -1,20 +1,19 @@
-package com.example.SpringRESTAPILBD.student;
+package com.example.SpringRESTAPILBD.teacher;
 
-import java.util.ArrayList;
-
-public class Student {
+public class Teacher {
     private Long id;
     private String firstName;
     private String lastName;
-    private int age;
-    private ArrayList<String> subjectList;
+    private String subjectName;
 
-    public Student(Long id, String firstName, String lastName, int age, ArrayList<String> subjectList) {
+    public Teacher(Long id, String firstName, String lastName, String subjectName) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.age = age;
-        this.subjectList = subjectList;
+        if (subjectName.equals("ALGEBRA") || subjectName.equals("LAW") || subjectName.equals("BIOLOGY"))
+            this.subjectName = subjectName;
+        else
+            this.subjectName = null;
     }
 
     public Long getId() {
@@ -41,29 +40,21 @@ public class Student {
         this.lastName = lastName;
     }
 
-    public int getAge() {
-        return age;
+    public String getSubjectName() {
+        return subjectName;
     }
 
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public ArrayList<String> getSubjectList() {
-        return subjectList;
-    }
-
-    public void setSubjectList(ArrayList<String> subjectList) {
-        this.subjectList = subjectList;
+    public void setSubjectName(String subjectName) {
+        this.subjectName = subjectName;
     }
 
     @Override
     public String toString() {
-        return "Student{" +
+        return "Teacher{" +
                 "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", age=" + age +
+                ", subjectName='" + subjectName + '\'' +
                 '}';
     }
 }
