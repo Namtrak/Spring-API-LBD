@@ -2,6 +2,7 @@ package com.example.SpringRESTAPILBD.teacher;
 
 import com.example.SpringRESTAPILBD.student.Student;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,32 +18,58 @@ public class TeacherController {
     }
 
     @PostMapping
-    public void addTeacher(@RequestBody Teacher teacher) {
+    ResponseEntity<String> addTeacher(@RequestBody Teacher teacher) {
+        if (teacher.getId() < 0) {
+            return ResponseEntity.badRequest().header("Successful:", "false").body("Invalid id");
+        }
+
         teacherService.addTeacher(teacher);
+        return ResponseEntity.ok().header("Successful:", "true").body("Teacher added");
     }
 
     @DeleteMapping(path = "{id}")
-    public void deleteTeacher(@PathVariable("id") Long id) {
+    ResponseEntity<String> deleteTeacher(@PathVariable("id") Long id) {
+        if (id < 0) {
+            return ResponseEntity.badRequest().header("Successful:", "false").body("Invalid id");
+        }
+
         teacherService.deleteTeacher(id);
+        return ResponseEntity.ok().header("Successful:", "true").body("Teacher deleted");
     }
 
     @GetMapping(path = "/all")
-    public List<Teacher> getAllTeachers() {
-        return teacherService.getTeachers();
+    ResponseEntity<List<Teacher>> getAllTeachers() {
+        return ResponseEntity.ok().header("Successful:", "true")
+                .body(teacherService.getAllTeachers());
     }
 
     @GetMapping(path = "{id}")
-    public Teacher getTeacher(@PathVariable("id") Long id) {
-        return teacherService.getTeacher(id);
+    ResponseEntity<Teacher> getTeacher(@PathVariable("id") Long id) {
+        if (id < 0) {
+            return ResponseEntity.badRequest().header("Successful:", "false").body(null);
+        }
+
+        return ResponseEntity.ok().header("Successful:", "true")
+                .body(teacherService.getTeacher(id));
     }
 
     @GetMapping(path = "{id}/class")
-    public List<Student> getTeacherClass(@PathVariable("id") Long id) {
-        return teacherService.getTeacherClass(id);
+    ResponseEntity<List<Student>> getTeacherClass(@PathVariable("id") Long id) {
+        if (id < 0) {
+            return ResponseEntity.badRequest().header("Successful:", "false").body(null);
+        }
+
+        return ResponseEntity.ok().header("Successful:", "true")
+                .body(teacherService.getTeacherClass(id));
     }
 
     @DeleteMapping(path = "{teacherId}/class/{studentId}")
-    public void deleteStudentFromClassByTeacherId(@PathVariable("teacherId") Long teacherId, @PathVariable("studentId") Long studentId) {
+    ResponseEntity<String> deleteStudentFromClassByTeacherId(@PathVariable("teacherId") Long teacherId, @PathVariable("studentId") Long studentId) {
+        if (teacherId < 0 || studentId < 0) {
+            return ResponseEntity.badRequest().header("Successful:", "false").body("Invalid teacher or student id");
+        }
+
         teacherService.deleteStudentFromClassByTeacherId(teacherId, studentId);
+        return ResponseEntity.ok().header("Successful", "true").body("Student deleted from teacher classes");
     }
 }

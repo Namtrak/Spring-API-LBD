@@ -1,6 +1,5 @@
 package com.example.SpringRESTAPILBD.student;
 
-import com.example.SpringRESTAPILBD.SpringRestApiLbdApplication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,9 +17,19 @@ public class StudentController {
     }
 
     @GetMapping("/all")
-    ResponseEntity<String> getAllStudents() {
+    ResponseEntity<List<Student>> getAllStudents() {
         return ResponseEntity.ok().header("Successful:", "true")
-                .body(SpringRestApiLbdApplication.asJsonString(studentService.getAllStudents()));
+                .body(studentService.getAllStudents());
+    }
+
+    @GetMapping(path = "{id}")
+    ResponseEntity<Student> getStudent(@PathVariable("id") Long id) {
+        if (id < 0) {
+            return ResponseEntity.badRequest().header("Successful:", "false").body(null);
+        }
+
+        return ResponseEntity.ok().header("Successful:", "true")
+                .body(studentService.getStudent(id));
     }
 
     @PostMapping
@@ -51,15 +60,5 @@ public class StudentController {
 
         studentService.deleteStudent(id);
         return ResponseEntity.ok().header("Successful:", "true").body("Student deleted");
-    }
-
-    @GetMapping(path = "{id}")
-    ResponseEntity<String> getStudent(@PathVariable("id") Long id) {
-        if (id < 0) {
-            return ResponseEntity.badRequest().header("Successful:", "false").body("Invalid id or age");
-        }
-
-        return ResponseEntity.ok().header("Successful:", "true")
-                        .body(SpringRestApiLbdApplication.asJsonString(studentService.getStudent(id)));
     }
 }
