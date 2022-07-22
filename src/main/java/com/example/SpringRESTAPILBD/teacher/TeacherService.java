@@ -24,7 +24,7 @@ public class TeacherService {
         teachers.addAll(List.of(megan, bob, roman));
     }
 
-    public ArrayList<Teacher> getTeachers() {
+    public ArrayList<Teacher> getAllTeachers() {
         return teachers;
     }
 

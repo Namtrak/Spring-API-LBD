@@ -1,6 +1,5 @@
 package com.example.SpringRESTAPILBD;
 
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
@@ -17,7 +16,7 @@ public class SpringRestApiLbdApplication {
 
 	/*
 	* UI localhost:8080/swagger-ui
-	* Docks localhost:8080/v3/api-docs
+	* Docs localhost:8080/v3/api-docs
 	* */
 
 	@Bean
@@ -33,12 +32,12 @@ public class SpringRestApiLbdApplication {
 
 		return info;
 	}
-
-	public static String asJsonString(final Object obj) {
-		try {
-			return new ObjectMapper().writeValueAsString(obj);
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
+//
+//	public static String asJsonString(final Object obj) {
+//		try {
+//			return new ObjectMapper().writeValueAsString(obj);
+//		} catch (Exception e) {
+//			throw new RuntimeException(e);
+//		}
+//	}
 }
