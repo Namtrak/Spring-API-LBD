@@ -4,7 +4,7 @@ public class Teacher {
     private Long id;
     private String firstName;
     private String lastName;
-    private String subjectName;
+    private String subjectName; // suggestion: maybe subjectName will be better with Enum?
 
     public Teacher(Long id, String firstName, String lastName, String subjectName) {
         this.id = id;
