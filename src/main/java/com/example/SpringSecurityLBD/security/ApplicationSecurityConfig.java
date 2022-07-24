@@ -3,6 +3,7 @@ package com.example.SpringSecurityLBD.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -25,16 +26,21 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-//                .antMatchers("/", "index", "/css/*", "/js/*")
-//                .permitAll()
-                .antMatchers("/api/user/**").hasAnyRole("user", "admin")
-                .antMatchers("/api/admin/**").hasRole("admin")
+        http
+                .csrf().disable()
+                .authorizeRequests()
+//                .antMatchers("/api/user/**").hasAnyRole("user", "admin")
+//                .antMatchers("/api/admin/**").hasRole("admin")
+                .antMatchers(HttpMethod.GET, "/api/user").permitAll()
+                .antMatchers(HttpMethod.PUT, "/api/user").hasAnyRole("user", "admin")
+                .antMatchers(HttpMethod.GET, "/api/admin").hasAnyRole("user", "admin")
+                .antMatchers(HttpMethod.POST, "/api/admin").hasAnyRole("admin")
+                .antMatchers(HttpMethod.DELETE, "/api/admin").hasAnyRole("admin")
                 .anyRequest()
                 .authenticated()
                 .and()
-//                .httpBasic();
-                .formLogin();
+                .httpBasic();
+//                .formLogin();
     }
 
     @Override
