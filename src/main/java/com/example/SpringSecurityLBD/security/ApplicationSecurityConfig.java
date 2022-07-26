@@ -31,11 +31,16 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
 //                .antMatchers("/api/user/**").hasAnyRole("user", "admin")
 //                .antMatchers("/api/admin/**").hasRole("admin")
-                .antMatchers(HttpMethod.GET, "/api/user").permitAll()
-                .antMatchers(HttpMethod.PUT, "/api/user").hasAnyRole("user", "admin")
-                .antMatchers(HttpMethod.GET, "/api/admin").hasAnyRole("user", "admin")
-                .antMatchers(HttpMethod.POST, "/api/admin").hasAnyRole("admin")
-                .antMatchers(HttpMethod.DELETE, "/api/admin").hasAnyRole("admin")
+//                .antMatchers(HttpMethod.GET, "/api/user").permitAll()
+//                .antMatchers(HttpMethod.PUT, "/api/user").hasAnyRole("user", "admin")
+//                .antMatchers(HttpMethod.GET, "/api/admin").hasAnyRole("user", "admin")
+//                .antMatchers(HttpMethod.POST, "/api/admin").hasAnyRole("admin")
+//                .antMatchers(HttpMethod.DELETE, "/api/admin").hasAnyRole("admin")
+                .antMatchers(HttpMethod.GET, "/api/user").hasAnyAuthority("USER_READ", "ADMIN")
+                .antMatchers(HttpMethod.PUT, "/api/user").hasAnyAuthority("USER_EDIT", "ADMIN")
+                .antMatchers(HttpMethod.GET, "/api/admin").hasAnyAuthority("ADMIN")
+                .antMatchers(HttpMethod.POST, "/api/admin").hasAnyAuthority("ADMIN")
+                .antMatchers(HttpMethod.DELETE, "/api/admin").hasAnyAuthority("ADMIN")
                 .anyRequest()
                 .authenticated()
                 .and()
@@ -49,15 +54,23 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
         UserDetails user = User.builder()
                 .username("user")
                 .password(passwordEncoder.encode("password"))
-                .roles("user") //ROLE_user
+//                .roles("user") //ROLE_user
+                .authorities("USER_READ", "USER_EDIT")
                 .build();
 
         UserDetails admin = User.builder()
                 .username("admin")
                 .password(passwordEncoder.encode("password123"))
-                .roles("admin") //ROLE_admin
+//                .roles("admin") //ROLE_admin
+                .authorities("ADMIN")
                 .build();
 
-        return new InMemoryUserDetailsManager(user, admin);
+        UserDetails spectator = User.builder()
+                .username("spectator")
+                .password(passwordEncoder.encode("spectator"))
+                .authorities("USER_READ")
+                .build();
+
+        return new InMemoryUserDetailsManager(user, admin, spectator);
     }
 }
