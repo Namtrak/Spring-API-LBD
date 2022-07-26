@@ -13,9 +13,9 @@ public class TeacherService {
     private ArrayList<Teacher> teachers;
     private StudentService studentService;
 
-    private Teacher megan = new Teacher(0L, "Megan", "Fox", "LAW");
-    private Teacher bob = new Teacher(1L, "Bob", "Builder", "ALGEBRA");
-    private Teacher roman = new Teacher(2L, "Roman", "Witularro", "BIOLOGY");
+    private Teacher megan = new Teacher(0L, "Megan", "Fox", Subject.LAW);
+    private Teacher bob = new Teacher(1L, "Bob", "Builder", Subject.ALGEBRA);
+    private Teacher roman = new Teacher(2L, "Roman", "Witularro", Subject.BIOLOGY);
 
     @Autowired
     public TeacherService(ArrayList<Teacher> teachers, StudentService studentService) {

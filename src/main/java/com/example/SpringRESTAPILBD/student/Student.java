@@ -1,5 +1,7 @@
 package com.example.SpringRESTAPILBD.student;
 
+import com.example.SpringRESTAPILBD.teacher.Subject;
+
 import java.util.ArrayList;
 
 public class Student {
@@ -7,9 +9,9 @@ public class Student {
     private String firstName;
     private String lastName;
     private int age;
-    private ArrayList<String> subjectList;
+    private ArrayList<Subject> subjectList;
 
-    public Student(Long id, String firstName, String lastName, int age, ArrayList<String> subjectList) {
+    public Student(Long id, String firstName, String lastName, int age, ArrayList<Subject> subjectList) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -49,11 +51,11 @@ public class Student {
         this.age = age;
     }
 
-    public ArrayList<String> getSubjectList() {
+    public ArrayList<Subject> getSubjectList() {
         return subjectList;
     }
 
-    public void setSubjectList(ArrayList<String> subjectList) {
+    public void setSubjectList(ArrayList<Subject> subjectList) {
         this.subjectList = subjectList;
     }
 

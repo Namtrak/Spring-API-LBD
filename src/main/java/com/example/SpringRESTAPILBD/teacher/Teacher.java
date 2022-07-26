@@ -4,16 +4,13 @@ public class Teacher {
     private Long id;
     private String firstName;
     private String lastName;
-    private String subjectName; // suggestion: maybe subjectName will be better with Enum?
+    private Subject subjectName;
 
-    public Teacher(Long id, String firstName, String lastName, String subjectName) {
+    public Teacher(Long id, String firstName, String lastName, Subject subjectName) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
-        if (subjectName.equals("ALGEBRA") || subjectName.equals("LAW") || subjectName.equals("BIOLOGY"))
-            this.subjectName = subjectName;
-        else
-            this.subjectName = null;
+        this.subjectName = subjectName;
     }
 
     public Long getId() {
@@ -40,11 +37,11 @@ public class Teacher {
         this.lastName = lastName;
     }
 
-    public String getSubjectName() {
+    public Subject getSubjectName() {
         return subjectName;
     }
 
-    public void setSubjectName(String subjectName) {
+    public void setSubjectName(Subject subjectName) {
         this.subjectName = subjectName;
     }
 
